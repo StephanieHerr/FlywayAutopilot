@@ -1,0 +1,1 @@
+PRINT 'I''m in the afterMigrate SQL Callback SCRIPT.  Yeah me!'

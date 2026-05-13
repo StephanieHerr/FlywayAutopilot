@@ -1,0 +1,17 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+--SET QUOTED_IDENTIFIER ON|OFF
+--SET ANSI_NULLS ON|OFF
+--GO
+CREATE PROCEDURE [dbo].[updateCustomer]
+    @customerID AS INT,
+	@phone AS NVARCHAR(24)
+
+AS
+BEGIN
+    UPDATE Sales.Customers
+	SET Phone = @Phone
+END
+GO
