@@ -9,7 +9,7 @@ name: Deploy migrations with manual approval
 # Manual approval is enforced by GitHub Environment protection rules.
 # Create the following two repository environments before running:
 #   production-read-only - used by the prepare job
-#   production-write     - used by the deploy job; configure 'Required reviewers' to enable manual approval (https://github.com/marketplace/actions/redgate-flyway-github-actions#manual-review-between-checks-and-deployment-flyway-enterprise)
+#   production-write     - used by the deploy job; configure 'Required reviewers' to enable manual approval
 
 on:
   workflow_dispatch:
@@ -26,10 +26,8 @@ jobs:
     - name: Setup Flyway
       uses: red-gate/setup-flyway@v3
       with:
-        edition: enterprise
+        edition: community
         i-agree-to-the-eula: true
-        email: "${{ secrets.FLYWAY_EMAIL }}"
-        token: "${{ secrets.FLYWAY_TOKEN }}"
     # Run checks
     - name: Run deployment checks and generate reports
       uses: red-gate/flyway-actions/migrations/checks@v2
@@ -57,10 +55,8 @@ jobs:
     - name: Setup Flyway
       uses: red-gate/setup-flyway@v3
       with:
-        edition: enterprise
+        edition: community
         i-agree-to-the-eula: true
-        email: "${{ secrets.FLYWAY_EMAIL }}"
-        token: "${{ secrets.FLYWAY_TOKEN }}"
     # Deploy changes
     - name: Run migrations deployment
       uses: red-gate/flyway-actions/migrations/deploy@v2
