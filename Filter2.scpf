@@ -1,12 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<!--
-SQL Compare
-SQL Compare
-Version:16.0.13.28757-->
-<NamedFilter version="1" type="SQLCompareFilter">
-  <!--This filter can be loaded using the SQL Compare UI or used with a SQL Compare command line session using the /filter switch-->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NamedFilter type="SQLCompareFilter" version="1">
   <FilterName>Filter</FilterName>
-  <Filter version="1" type="DifferenceFilter">
+  <Filter type="DifferenceFilter" version="1">
     <FilterCaseSensitive>False</FilterCaseSensitive>
     <Filters version="1">
       <None version="1">
@@ -23,7 +18,7 @@ Version:16.0.13.28757-->
       </AsymmetricKey>
       <Certificate version="1">
         <Include>True</Include>
-        <Expression>TRUE</Expression>
+        <Expression/>
       </Certificate>
       <Contract version="1">
         <Include>True</Include>
@@ -55,7 +50,7 @@ Version:16.0.13.28757-->
       </FullTextStoplist>
       <Function version="1">
         <Include>True</Include>
-        <Expression>((@NAME LIKE 'T'))</Expression>
+        <Expression>TRUE</Expression>
       </Function>
       <MessageType version="1">
         <Include>True</Include>
@@ -122,12 +117,12 @@ Version:16.0.13.28757-->
         <Expression>TRUE</Expression>
       </Synonym>
       <Table version="1">
-        <Include>True</Include>
-        <Expression>TRUE</Expression>
+        <Include>False</Include>
+        <Expression>(@NAME = 'e')</Expression>
       </Table>
       <User version="1">
         <Include>True</Include>
-        <Expression>TRUE</Expression>
+        <Expression/>
       </User>
       <UserDefinedType version="1">
         <Include>True</Include>

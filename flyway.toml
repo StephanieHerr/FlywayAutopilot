@@ -37,6 +37,7 @@ mode = "all"
 enableMigrations = true
 developmentEnvironment = "development"
 shadowEnvironment = "shadow"
+deploymentPlatform = "Bash"
 
   [flywayDesktop.generate]
   undoScripts = true
@@ -46,28 +47,6 @@ filterFile = "filter.rgf"
 
   [redgateCompare.sqlserver]
   filterFile = "Filter.scpf"
-
-[redgateCompare.sqlserver.data.options.comparison]
-compressTemporaryFiles = false
-forceBinaryCollation = false
-treatEmptyStringAsNull = false
-trimTrailingWhiteSpace = false
-useChecksumComparison = false
-useMaxPrecisionForFloatComparison = false
-
-[redgateCompare.sqlserver.data.options.deployment]
-disableDdlTriggers = true
-disableDmlTriggers = false
-disableForeignKeys = false
-dontIncludeCommentsInScript = false
-dropPrimaryKeysIndexesAndUniqueConstraints = false
-reseedIdentityColumns = false
-skipIntegrityChecksForForeignKeys = false
-transportClrDataTypesAsBinary = false
-
-[redgateCompare.sqlserver.data.options.mapping]
-includeTimestampColumns = false
-useCaseSensitiveObjectDefinition = true
 
 [redgateCompare.sqlserver.options.behavior]
 addCreateOrAlterForRerunnableScripts = false
@@ -127,7 +106,6 @@ ignoreSquareBracketsInObjectNames = false
 ignoreStatistics = true
 ignoreStatisticsIncremental = false
 ignoreStatisticsNoRecomputePropertyOnIndexes = false
-ignoreSynonymDependencies = false
 ignoreSystemNamedConstraintAndIndexNames = false
 ignoreTsqltFrameworkAndTests = true
 ignoreUserProperties = true
@@ -136,3 +114,25 @@ ignoreWhiteSpace = true
 ignoreWithElementOrder = true
 ignoreWithEncryption = false
 ignoreWithNoCheck = true
+
+[redgateCompare.sqlserver.data.options.mapping]
+includeTimestampColumns = false
+useCaseSensitiveObjectDefinition = true
+
+[redgateCompare.sqlserver.data.options.comparison]
+compressTemporaryFiles = false
+forceBinaryCollation = false
+treatEmptyStringAsNull = false
+trimTrailingWhiteSpace = false
+useChecksumComparison = false
+useMaxPrecisionForFloatComparison = false
+
+[redgateCompare.sqlserver.data.options.deployment]
+disableDdlTriggers = true
+disableDmlTriggers = false
+disableForeignKeys = false
+dontIncludeCommentsInScript = false
+dropPrimaryKeysIndexesAndUniqueConstraints = false
+reseedIdentityColumns = false
+skipIntegrityChecksForForeignKeys = false
+transportClrDataTypesAsBinary = false
