@@ -426,8 +426,7 @@ jobs:
         build-ok-to-erase: true
         # Working directory is the path from your repo root to your Flyway project
         working-directory: "."
-  deploy:
-    needs: checks
+  deploy3:
     runs-on: ubuntu-latest
     # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
     environment: production-write
@@ -435,20 +434,124 @@ jobs:
     # Check out the repository
     - name: Checkout
       uses: actions/checkout@v6
-    # Download and auth Flyway
-    - name: Setup Flyway
-      uses: red-gate/setup-flyway@v3
-      with:
-        edition: enterprise
-        i-agree-to-the-eula: true
-        email: "${{ secrets.FLYWAY_EMAIL }}"
-        token: "${{ secrets.FLYWAY_TOKEN }}"
-    # Deploy changes
-    - name: Run migrations deployment
-      uses: red-gate/flyway-actions/migrations/deploy@v2
-      with:
-        target-environment: Test
-        target-user: "${{ secrets.FLYWAY_USER }}"
-        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
-        # Working directory is the path from your repo root to your Flyway project
-        working-directory: "."
+  deploy4:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy5:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy6:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy7:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy8:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy9:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy10:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy11:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy12:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy13:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy14:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy15:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy16:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy17:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  deploy18:
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+  
