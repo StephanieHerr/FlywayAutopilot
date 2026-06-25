@@ -1,0 +1,454 @@
+# Workflows are the key to CI/CD for Flyway projects in GitHub repositories. 
+# Learn about GitHub workflows, where they go in your repository, and how they're triggered (https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows)
+
+# Secrets are recommended for storing details for logging into Flyway and your databases. 
+# Learn how to create secrets (e.g. ${{ secrets.EMAIL }}) for your repository, and reference them in your workflow (https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets)
+
+name: Deploy migrations with manual approval
+
+# Manual approval is enforced by GitHub Environment protection rules.
+# Create the following two repository environments before running:
+#   production-read-only - used by the prepare job
+#   production-write     - used by the deploy job; configure 'Required reviewers' to enable manual approval (https://github.com/marketplace/actions/redgate-flyway-github-actions#manual-review-between-checks-and-deployment-flyway-enterprise)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+
+
+
+  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."  checks:
+    runs-on: ubuntu-latest
+    environment: production-read-only
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Run checks
+    - name: Run deployment checks and generate reports
+      uses: red-gate/flyway-actions/migrations/checks@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        build-environment: Check
+        build-user: "${{ secrets.FLYWAY_BUILD_USER }}"
+        build-password: "${{ secrets.FLYWAY_BUILD_PASSWORD }}"
+        # The build environment will be erased - set build-ok-to-erase to true if that's okay
+        build-ok-to-erase: true
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
+  deploy:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Configure GitHub Environment protection rules on production-write to require approval before deploy runs
+    environment: production-write
+    steps:
+    # Check out the repository
+    - name: Checkout
+      uses: actions/checkout@v6
+    # Download and auth Flyway
+    - name: Setup Flyway
+      uses: red-gate/setup-flyway@v3
+      with:
+        edition: enterprise
+        i-agree-to-the-eula: true
+        email: "${{ secrets.FLYWAY_EMAIL }}"
+        token: "${{ secrets.FLYWAY_TOKEN }}"
+    # Deploy changes
+    - name: Run migrations deployment
+      uses: red-gate/flyway-actions/migrations/deploy@v2
+      with:
+        target-environment: Test
+        target-user: "${{ secrets.FLYWAY_USER }}"
+        target-password: "${{ secrets.FLYWAY_PASSWORD }}"
+        # Working directory is the path from your repo root to your Flyway project
+        working-directory: "."
