@@ -1,4 +1,4 @@
-name: Ten Sequential Jobs
+name: Twenty Sequential Jobs
 
 on:
   workflow_dispatch:
@@ -72,3 +72,73 @@ jobs:
     steps:
       - name: Print Hello
         run: echo "Hello World from Job 10"
+
+  job-11:
+    runs-on: ubuntu-latest
+    needs: job-10
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 11"
+
+  job-12:
+    runs-on: ubuntu-latest
+    needs: job-11
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 12"
+
+  job-13:
+    runs-on: ubuntu-latest
+    needs: job-12
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 13"
+
+  job-14:
+    runs-on: ubuntu-latest
+    needs: job-13
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 14"
+
+  job-15:
+    runs-on: ubuntu-latest
+    needs: job-14
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 15"
+
+  job-16:
+    runs-on: ubuntu-latest
+    needs: job-15
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 16"
+
+  job-17:
+    runs-on: ubuntu-latest
+    needs: job-16
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 17"
+
+  job-18:
+    runs-on: ubuntu-latest
+    needs: job-17
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 18"
+
+  job-19:
+    runs-on: ubuntu-latest
+    needs: job-18
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 19"
+
+  job-20:
+    runs-on: ubuntu-latest
+    needs: job-19
+    steps:
+      - name: Print Hello
+        run: echo "Hello World from Job 20"
